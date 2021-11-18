@@ -13,17 +13,16 @@ let rollbar = new Rollbar({
 });
 
 // record a generic message and send it to Rollbar
-rollbar.log("Hello world!");
-rollbar.log("Added a .get!");
+// rollbar.log("Hello world!");
+rollbar.log("Added new rollbar message");
 
-let students = ["Sam", "Bradley", "Irene"];
+let students = ["Sam", "Bradley", "Irene", "Michael"];
 
 app.use(express.static("client"));
 // app.use(express.json());
 
 app.get("/", (req, res) => {
   res.sendFile("index.html");
-  console.log("get the landing page");
 });
 
 app.get("/api/students", (req, res) => {
