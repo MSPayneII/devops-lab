@@ -18,6 +18,9 @@ rollbar.log("Added new rollbar message");
 
 let students = ["Sam", "Bradley", "Irene", "Michael"];
 
+app.use(express.json());
+app.use(cors());
+
 app.use(express.static("client"));
 // app.use(express.json());
 
