@@ -26,8 +26,8 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api/students", (req, res) => {
-  console.log("make the get");
   rollbar.info("Someone got the list of students on page load");
+  console.log("made the get");
   res.status(200).send(students);
 });
 
