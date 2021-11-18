@@ -16,10 +16,20 @@ let rollbar = new Rollbar({
 rollbar.log("Hello world!");
 rollbar.log("Added a .get!");
 
+let students = ["Sam", "Bradley", "Irene"];
+
 app.use(express.static("client"));
+// app.use(express.json());
 
 app.get("/", (req, res) => {
   res.sendFile("index.html");
+  console.log("get the landing page");
+});
+
+app.get("/api/students", (req, res) => {
+  console.log("make the get");
+  rollbar.info("Someone got the list of students on page load");
+  res.status(200).send(students);
 });
 
 const port = process.env.PORT || process.env.SERVER_PORT;
