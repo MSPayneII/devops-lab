@@ -35,6 +35,32 @@ app.get("/api/students", (req, res) => {
   res.status(200).send(students);
 });
 
+app.post("/api/students", function (req, res) {
+  let { name } = req.body;
+
+  const index = students.findIndex((student) => {
+    return student === name;
+  });
+
+  try {
+    if (index === -1 && name !== "") {
+      students.push(name);
+      rollbar.info("Someone added a student");
+      res.status(200).send(students);
+    } else if (name === "") {
+      rollbar.error("Someone tried to enter a blank student");
+
+      res.status(400).send("must provide a name");
+    } else {
+      rollbar.error("Someone tried to enter a duplicate student name");
+      res.status(400).send("that student already exists");
+    }
+  } catch (err) {
+    console.log(err);
+    rollbar.error(err);
+  }
+});
+
 const port = process.env.PORT || process.env.SERVER_PORT;
 
 app.listen(port, () => console.log(`The port is running on: ${port}`));
