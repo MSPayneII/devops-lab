@@ -14,17 +14,19 @@ let rollbar = new Rollbar({
 
 // record a generic message and send it to Rollbar
 // rollbar.log("Hello world!");
-rollbar.log("Added new rollbar message");
+rollbar.log("Checking");
 
 let students = ["Sam", "Bradley", "Irene", "Michael"];
 
 app.use(express.json());
 app.use(cors());
-app.use(express.static("client"));
+
 // app.use(express.json());
 
+app.use(express.static("client"));
 app.get("/", (req, res) => {
   res.sendFile("index.html");
+  rollbar.log("got the index.html file");
 });
 
 // app.get("/main");
@@ -48,7 +50,7 @@ app.post("/api/students", function (req, res) {
       rollbar.info("Someone added a student");
       res.status(200).send(students);
     } else if (name === "") {
-      rollbar.error("Someone tried to enter a blank student");
+      rollbar.critical("Someone tried to enter a blank student");
 
       res.status(400).send("must provide a name");
     } else {
@@ -59,6 +61,15 @@ app.post("/api/students", function (req, res) {
     console.log(err);
     rollbar.error(err);
   }
+});
+
+app.delete("/api/students/:index", (req, res) => {
+  const targetIndex = +req.params.index;
+
+  students.splice(targetIndex, 1);
+
+  rollbar.info("Someone deleted a student");
+  res.status(200).send(students);
 });
 
 const port = process.env.PORT || process.env.SERVER_PORT;
