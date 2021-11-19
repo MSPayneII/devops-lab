@@ -26,9 +26,6 @@ app.use(express.static("client"));
 app.get("/", (req, res) => {
   res.sendFile("index.html");
 });
-app.get("/main.js", (req, res) => {
-  res.sendFile("main.js");
-});
 
 // app.get("/main");
 
